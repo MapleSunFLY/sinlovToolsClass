@@ -41,12 +41,8 @@ public class RSACoder extends Coder {
 
 	/**
 	 * 用私钥对信息生成数字签名
-	 * 
-	 * @param data
-	 *            加密数据
-	 * @param privateKey
-	 *            私钥
-	 * 
+	 * @param data  加密数据
+	 * @param privateKey  私钥
 	 * @return
 	 * @throws Exception
 	 */
@@ -67,51 +63,38 @@ public class RSACoder extends Coder {
 		Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
 		signature.initSign(priKey);
 		signature.update(data);
-
 		return encryptBASE64(signature.sign());
 	}
 
 	/**
 	 * 校验数字签名
-	 * 
-	 * @param data
-	 *            加密数据
-	 * @param publicKey
-	 *            公钥
-	 * @param sign
-	 *            数字签名
-	 * 
+	 * @param data 加密数据
+	 * @param publicKey 公钥
+	 * @param sign 数字签名
 	 * @return 校验成功返回true 失败返回false
 	 * @throws Exception
 	 * 
 	 */
 	public static boolean verify(byte[] data, String publicKey, String sign)
 			throws Exception {
-
 		// 解密由base64编码的公钥
 		byte[] keyBytes = decryptBASE64(publicKey);
-
 		// 构造X509EncodedKeySpec对象
 		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
-
 		// KEY_ALGORITHM 指定的加密算法
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-
 		// 取公钥匙对象
 		PublicKey pubKey = keyFactory.generatePublic(keySpec);
-
 		Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);
 		signature.initVerify(pubKey);
 		signature.update(data);
-
 		// 验证签名是否正常
 		return signature.verify(decryptBASE64(sign));
 	}
 
 	/**
-	 * 解密<br>
+	 * <li>解密
 	 * 用私钥解密
-	 * 
 	 * @param data
 	 * @param key
 	 * @return
@@ -135,9 +118,8 @@ public class RSACoder extends Coder {
 	}
 
 	/**
-	 * 解密<br>
-	 * 用私钥解密
-	 * 
+	 * <li>解密
+	 * 用公钥解密
 	 * @param data
 	 * @param key
 	 * @return
@@ -163,7 +145,6 @@ public class RSACoder extends Coder {
 	/**
 	 * 加密<br>
 	 * 用公钥加密
-	 * 
 	 * @param data
 	 * @param key
 	 * @return
@@ -189,7 +170,6 @@ public class RSACoder extends Coder {
 	/**
 	 * 加密<br>
 	 * 用私钥加密
-	 * 
 	 * @param data
 	 * @param key
 	 * @return
@@ -214,7 +194,6 @@ public class RSACoder extends Coder {
 
 	/**
 	 * 取得私钥
-	 * 
 	 * @param keyMap
 	 * @return
 	 * @throws Exception
@@ -228,7 +207,6 @@ public class RSACoder extends Coder {
 
 	/**
 	 * 取得公钥
-	 * 
 	 * @param keyMap
 	 * @return
 	 * @throws Exception
@@ -242,7 +220,6 @@ public class RSACoder extends Coder {
 
 	/**
 	 * 初始化密钥
-	 * 
 	 * @return
 	 * @throws Exception
 	 */
